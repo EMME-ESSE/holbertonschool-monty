@@ -35,10 +35,7 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-char **tokenizer(char *lineptr);
-void _push(stack_t **stack, unsigned int num);
-void matcher(char **str, char *lineptr, stack_t **h,
-FILE *fp, unsigned int linenum);
-void _pall(stack_t **h, unsigned int linenum);
+void nop(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
 
 #endif
