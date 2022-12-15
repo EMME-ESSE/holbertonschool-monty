@@ -9,7 +9,6 @@ stack_t **full_start;
  */
 int main(int argc, char *argv[])
 {
-	stack_t *start;
 	FILE *fp;
 
 	if (argc != 2)
@@ -23,9 +22,10 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	while ((read = getline(&line, &len, fp)) != -1)
+	{
+		printf("%s", line);
+	}
 	fclose(fp);
-	start = NULL;
-	full_start = &start;
-	read_file(argv[1], &start);
 	exit(EXIT_SUCCESS);
 }
