@@ -10,6 +10,8 @@ stack_t **full_start;
 int main(int argc, char *argv[])
 {
 	FILE *fp;
+	char *line = NULL;
+	size_t len = 0;
 
 	if (argc != 2)
 	{
@@ -22,7 +24,13 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	while ((read = getline(&line, &len, fp)) != -1)
+	line = malloc(sizeof(char) * 3);
+	if (!line)
+	{
+		free(line);
+		return (0);
+	}
+	while ((getline(&line, &len, fp)) != -1)
 	{
 		printf("%s", line);
 	}
