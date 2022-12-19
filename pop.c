@@ -15,5 +15,5 @@ void _pop(stack_t **stack, unsigned int line_number)
                 exit(EXIT_FAILURE);
 	}
 	*stack = (*stack)->next;/*en lugar de esto podemos hacer que este vuelva al anterior*/ 
-	free(temp);
+	free(start);
 }
