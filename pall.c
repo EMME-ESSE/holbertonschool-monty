@@ -6,15 +6,20 @@
  */
 void _pall(stack_t **stack, unsigned int line_number)
 {
-	(void)line_number;
-	stack_t *aux = *stack;
+	stack_t *cursor = NULL;
 
-	if (!stack || !(*stack))
-		return;
-	aux = *stack;
-	while (aux)
+
+	if (!stack)
 	{
-		fprintf(stdout, "%d\n", aux->n);
-		aux = aux->next;
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, token);
+		return (EXIT_FAILURE);
+	}
+	if (head)
+		cursor = *head;
+
+	while (cursor)
+	{
+		printf("%d\n", cursor->n);
+		cursor = cursor->next;
 	}
 }
