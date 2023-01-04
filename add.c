@@ -1,6 +1,6 @@
 #include "monty.h"
 /**
- * add - adds elements of the stack.
+ * _add - adds elements of the stack.
  * @stack: pointer to the head of the stack
  * @line_number: the number of the line it the file
  * Return: void
