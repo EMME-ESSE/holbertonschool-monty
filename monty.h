@@ -40,8 +40,6 @@ typedef struct instruction_s
 
 void (*get_op(char *s))(stack_t **stack, unsigned int line_number);
 
-int check_number(char *str);
-void push_err(unsigned int line_number);
 void _push(stack_t **stack, unsigned int line_number);
 void _pall(stack_t **stack, unsigned int line_number);
 void _nop(stack_t **stack, unsigned int line_number);
