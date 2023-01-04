@@ -1,4 +1,9 @@
 #include "monty.h"
+/**
+* get_op - Takes line from monty and returns corresponding op function.
+* @buf: Pointer to buffer.
+* Return: Pointer to operator function.
+**/
 void (*get_op(char *s))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t ops[] = {
