@@ -6,24 +6,33 @@
  */
 void _push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new;
-	char *integer;
+	int num = atoi(strtok(NULL, " \n"));
 
-	new = malloc(sizeof(stack_t));
-	if (new == NULL)
-	return;
+	stack_t *node = NULL;
+	stack_t *ptr = *stack;
 
-	integer = strtok(NULL, " ");
-	if (integer == NULL)
+	if (!stack)
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-			exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: malloc failed on line: %d\n", line_number);
+		return;
 	}
-
-	new->n = line_number;
-	new->next = *stack;
-	new->prev = NULL;
-	if (*stack != NULL)
-		(*stack)->prev = new;
-	*stack = new;
+	node = malloc(sizeof(stack_t));
+	if (!node)
+	{
+		fprintf(stderr, "malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	node->n = num;
+	node->next = NULL;
+	node->prev = NULL;
+	if (!*stack)
+		*stack = node;
+	if (ptr)
+	{
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = node;
+		node->prev = ptr;
+	}
 }
