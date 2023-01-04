@@ -3,49 +3,45 @@
  * main - entry point.
  * @argc: argument count.
  * @argv: argument vector.
- *
  * Return: Always 0 (Success).
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-  stack_t **stack = NULL;
-  char *line = NULL;
-  size_t len = 0;
-  unsigned int line_number = 0;
-  FILE *fp;
-  int op;
+	char *line = NULL, *token;
+	FILE *fp;
+	size_t len = 0;
+	ssize_t read;
+	int line_number = 1;
+	stack_t *stack = NULL;
+	void (*f)(stack_t **stack, unsigned int line_number) = NULL;
 
-  if (argc != 2)
-  {
-    fprintf(stderr, "USAGE: %s file\n", argv[0]);
-    return EXIT_FAILURE;
-  }
-  fp = fopen(argv[1], "r");
-  if (!fp)
-  {
-    fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-    return EXIT_FAILURE;
-  }
-  while (getline(&line, &len, fp) != -1)
-  {
-    char *opcode;
-    line_number++;
-    opcode = strtok(line, " \t\n");
-    if (!opcode || opcode[0] == '#')
-      continue;
-    op = get_op(opcode);
-    if (op < 0 || !op[opcode])
-    {
-      fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-      free_stack(stack);
-      free(line);
-      fclose(fp);
-      return EXIT_FAILURE;
-    }
-    return (op[opcode]);
-  }
-  free_stack(stack);
-  free(line);
-  fclose(fp);
-  return EXIT_SUCCESS;
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		return (EXIT_FAILURE);
+	}
+	fp = fopen(argv[1], "r");
+	if (!fp)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		return (EXIT_FAILURE);
+	}
+	while ((read = getline(&line, &len, fp)) != -1)
+	{
+		token = strtok(line, " \n");
+		if (!token)
+			continue;
+		f = get_op(token);
+		if (!f)
+		{
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, token);
+			return (EXIT_FAILURE);
+		}
+		f(&stack, line_number);
+		line_number++;
+	}
+	fclose(fp);
+	free(line);
+	free_stack(stack);
+	return (EXIT_SUCCESS);
 }
