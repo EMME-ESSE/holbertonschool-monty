@@ -12,10 +12,10 @@ void _pall(stack_t **stack, unsigned int line_number)
 	if (!stack)
 	{
 		fprintf(stderr, "L%d: unknown instruction\n", line_number);
-		return (EXIT_FAILURE);
+		return;
 	}
 	if (stack)
-		cursor = *stack;
+		go = *stack;
 
 	while (go)
 	{
